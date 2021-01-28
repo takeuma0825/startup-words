@@ -1,3 +1,24 @@
+# スタートアップに関する用語集
+
+フロントエンドの学習としてサイトを構築する。
+
+## 機能
+
+- あいうえお順
+- アルファベット順
+- カテゴリ検索（資金調達、etc...）
+- 投資ラウンド検索（プレシード、シード、シリーズ A/B/C）
+
+## 構成
+
+- TypeScript
+- Next.js
+- Material-UI
+- Firebase
+  - Hosting
+  - FireStore
+  - Cloud Functions(別リポジトリ)
+
 # TypeScript Next.js example
 
 This is a really simple project that shows the usage of Next.js with TypeScript.
