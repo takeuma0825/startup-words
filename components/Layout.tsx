@@ -1,13 +1,15 @@
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import React, { ReactNode } from "react";
+import Link from "next/link";
+import Head from "next/head";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import { Typography } from "@material-ui/core";
 
 type Props = {
-  children?: ReactNode
-  title?: string
-}
+  children?: ReactNode;
+  title?: string;
+};
 
-const Layout = ({ children, title = 'This is the default title' }: Props) => (
+const Layout = ({ children, title = "Startup words" }: Props) => (
   <div>
     <Head>
       <title>{title}</title>
@@ -17,25 +19,38 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
     <header>
       <nav>
         <Link href="/">
-          <a>Home</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/users">
-          <a>Users List</a>
-        </Link>{' '}
-        | <a href="/api/users">Users API</a>
+          <a>あいうえお</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="/round">
+          <a>投資ラウンド</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="/alphabet">
+          <a>アルファベット</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="/category">
+          <a>カテゴリ</a>
+        </Link>
+        <hr />
       </nav>
     </header>
     {children}
     <footer>
       <hr />
-      <span>I'm here to stay (Footer)</span>
+      <Typography color="textPrimary" variant="h5">
+        <span>Startup用語</span>
+      </Typography>
+      <br />
+      <Typography color="textSecondary" variant="h6">
+        <a href="//twitter.com/takeuma0825">
+          <TwitterIcon color="primary" fontSize="large" />
+          @takeuma0825
+        </a>
+      </Typography>
     </footer>
   </div>
-)
+);
 
-export default Layout
+export default Layout;

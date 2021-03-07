@@ -5,6 +5,26 @@
 // import { User } from 'path/to/interfaces';
 
 export type User = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
+
+/**
+ * 用語の説明
+ */
+export type Word = {
+  alphabet?: string;
+  category: string;
+  description: string;
+  fullword?: string;
+  investment_round: string;
+  syllabary?: string;
+  word: string;
+};
+
+// export type Words = typeof words;
+
+export type Words = {
+  key: string;
+  words: Word[];
+};

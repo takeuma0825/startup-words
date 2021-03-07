@@ -23,12 +23,12 @@ export const db = firebase.firestore();
 export const wordConverter = {
   toFirestore(word: Word): firebase.firestore.DocumentData {
     return {
-      alphabet: word.alphabet,
+      alphabet: word.alphabet === undefined ? null : word.alphabet,
       category: word.category,
       description: word.description,
-      fullword: word.fullword,
+      fullword: word.fullword === undefined ? null : word.fullword,
       investment_round: word.investment_round,
-      syllabary: word.syllabary,
+      syllabary: word.syllabary === undefined ? null : word.syllabary,
       word: word.word,
     };
   },
@@ -38,12 +38,12 @@ export const wordConverter = {
   ): Word {
     const data = snapshot.data(options)!;
     return {
-      alphabet: data.alphabet,
+      alphabet: data.alphabet === undefined ? null : data.alphabet,
       category: data.category,
       description: data.description,
-      fullword: data.fullword,
+      fullword: data.fullword === undefined ? null : data.fullword,
       investment_round: data.investment_round,
-      syllabary: data.syllabary,
+      syllabary: data.syllabary === undefined ? null : data.syllabary,
       word: data.word,
     };
   },

@@ -7,62 +7,44 @@ import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useStyles } from "../components/theme";
 
-const SYLLABARY: string[] = [
-  "あ",
-  "い",
-  "う",
-  "え",
-  "お",
-  "か",
-  "き",
-  "く",
-  "け",
-  "こ",
-  "さ",
-  "し",
-  "す",
-  "せ",
-  "そ",
-  "た",
-  "ち",
-  "つ",
-  "て",
-  "と",
-  "な",
-  "に",
-  "ぬ",
-  "ね",
-  "の",
-  "は",
-  "ひ",
-  "ふ",
-  "へ",
-  "ほ",
-  "ま",
-  "み",
-  "む",
-  "め",
-  "も",
-  "や",
-  "ゆ",
-  "よ",
-  "ら",
-  "り",
-  "る",
-  "れ",
-  "ろ",
-  "わ",
+const ALPHABET: string[] = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
 ];
 
 // export const getServerSideProps: GetServerSideProps = async () => {
 export const getStaticProps: GetStaticProps = async () => {
   const wordsList: Words[] = [];
-  for (const char of SYLLABARY) {
+  for (const char of ALPHABET) {
     const wordList: Word[] = [];
     await db
       .collection("words")
-      .withConverter(wordConverter) //  objectコンバータで変換して型安全に利用する。
-      .where("syllabary", "==", char)
+      .withConverter(wordConverter)
+      .where("alphabet", "==", char)
       .orderBy("word")
       .get()
       .then((ss) => {
@@ -81,14 +63,13 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-function Syllabary({
+function Alphabet({
   wordsList,
-}: //  InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: // InferGetServerSidePropsType<typeof getServerSideProps>) {
 InferGetStaticPropsType<typeof getStaticProps>) {
   const classes = useStyles();
   return (
-    // <WordsPage {wordsList}></WordsPage>
-    <Layout>
+    <Layout key="alphabet">
       {wordsList.map((s: Words) => (
         <>
           {s.words.length !== 0 ? (
@@ -103,6 +84,9 @@ InferGetStaticPropsType<typeof getStaticProps>) {
                       <CardContent key={word.word} className={classes.wordCard}>
                         <Typography className={classes.text}>
                           {word.word}
+                          {word.fullword === null
+                            ? ""
+                            : "(" + word.fullword + ")"}
                         </Typography>
                         <Typography className={classes.description}>
                           {word.description.replace(/\\n/g, "\n")}
@@ -120,4 +104,4 @@ InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export default Syllabary;
+export default Alphabet;

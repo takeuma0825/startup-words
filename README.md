@@ -15,9 +15,8 @@
 - Next.js
 - Material-UI
 - Firebase
-  - Hosting
   - FireStore
-  - Cloud Functions(別リポジトリ)
+  - Hosting
 
 # TypeScript Next.js example
 

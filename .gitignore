@@ -45,6 +45,7 @@ yarn-error.log*
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
+./out
 
 ### react ###
 .DS_*

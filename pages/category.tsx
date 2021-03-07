@@ -3,75 +3,33 @@ import Layout from "../components/Layout";
 import { db, wordConverter } from "../lib/firestore";
 import { Word, Words } from "../interfaces/index";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
-// import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useStyles } from "../components/theme";
 
-const SYLLABARY: string[] = [
-  "あ",
-  "い",
-  "う",
-  "え",
-  "お",
-  "か",
-  "き",
-  "く",
-  "け",
-  "こ",
-  "さ",
-  "し",
-  "す",
-  "せ",
-  "そ",
-  "た",
-  "ち",
-  "つ",
-  "て",
-  "と",
-  "な",
-  "に",
-  "ぬ",
-  "ね",
-  "の",
-  "は",
-  "ひ",
-  "ふ",
-  "へ",
-  "ほ",
-  "ま",
-  "み",
-  "む",
-  "め",
-  "も",
-  "や",
-  "ゆ",
-  "よ",
-  "ら",
-  "り",
-  "る",
-  "れ",
-  "ろ",
-  "わ",
+const CATEGORY: string[] = [
+  "プロダクト開発",
+  "マーケティング",
+  "資金調達",
+  "採用",
 ];
 
-// export const getServerSideProps: GetServerSideProps = async () => {
 export const getStaticProps: GetStaticProps = async () => {
   const wordsList: Words[] = [];
-  for (const char of SYLLABARY) {
+  for (const char of CATEGORY) {
     const wordList: Word[] = [];
     await db
       .collection("words")
-      .withConverter(wordConverter) //  objectコンバータで変換して型安全に利用する。
-      .where("syllabary", "==", char)
+      .withConverter(wordConverter)
+      .where("category", "==", char)
       .orderBy("word")
       .get()
       .then((ss) => {
         ss.forEach((s) => {
           wordList.push(s.data());
         });
+        const words: Words = { key: char, words: wordList };
+        wordsList.push(words);
       });
-    const words: Words = { key: char, words: wordList };
-    wordsList.push(words);
   }
   console.log(JSON.stringify(wordsList));
   return {
@@ -81,14 +39,12 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-function Syllabary({
+function Category({
   wordsList,
-}: //  InferGetServerSidePropsType<typeof getServerSideProps>) {
-InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const classes = useStyles();
   return (
-    // <WordsPage {wordsList}></WordsPage>
-    <Layout>
+    <Layout key="category">
       {wordsList.map((s: Words) => (
         <>
           {s.words.length !== 0 ? (
@@ -103,6 +59,9 @@ InferGetStaticPropsType<typeof getStaticProps>) {
                       <CardContent key={word.word} className={classes.wordCard}>
                         <Typography className={classes.text}>
                           {word.word}
+                          {word.fullword === null
+                            ? ""
+                            : "(" + word.fullword + ")"}
                         </Typography>
                         <Typography className={classes.description}>
                           {word.description.replace(/\\n/g, "\n")}
@@ -120,4 +79,4 @@ InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export default Syllabary;
+export default Category;
